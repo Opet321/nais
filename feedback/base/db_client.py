@@ -8,10 +8,9 @@ from config import MONGODB_URL
 
 logger = logging.getLogger("db_client") 
 
-prefix = mongo.get("core.main", "prefix", ".")
+db = MongoDatabase(MONGODB_URL)
 
-mongo = MongoCli(MONGO_URL)
-db = mongo.premium
+prefix = db.get("core.main", "prefix", ".")
 
 async def go_antipm(user_id: int):
     user_data = await db.users.find_one({"user_id": user_id})
