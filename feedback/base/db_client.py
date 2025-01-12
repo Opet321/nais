@@ -8,7 +8,7 @@ from config import MONGODB_URL
 
 logger = logging.getLogger("db_client") 
 
-db = MongoDatabase(MONGODB_URL)
+db = Database(MONGODB_URL)
 
 prefix = db.get("core.main", "prefix", ".")
 
