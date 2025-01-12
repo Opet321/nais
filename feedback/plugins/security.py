@@ -11,7 +11,7 @@ from feedback.base.db_client import antipmdb
 
 
 pmstatus = filters.create(
-    lambda _, __, ___: db.get("core.antipm", "status", False)
+    lambda _, __, ___: antipmdb.get("core.antipm", "status", False)
 )
 
 contacts = filters.create(
