@@ -10,17 +10,6 @@ from asyncio import sleep
 from feedback.base.db_client import db
 
 
-pmstatus = filters.create(
-    lambda _, __, ___: db.get("core.antipm", "status", False)
-)
-
-contacts = filters.create(
-    lambda _, __, message: message.from_user.is_contact
-)
-
-supports = filters.create(
-    lambda _, __, message: message.chat.is_support
-)
 
 
 @Client.on_message(
@@ -33,7 +22,7 @@ supports = filters.create(
 )
 async def _antipm_(client: Client, message: Message):
     userpm = await client.resolve_peer(message.chat.id)
-    if antipmdb.get("core.antipm", "pmreport", False):
+    if db.get("core.antipm", "pmreport", False):
         await client.invoke(
             functions.messages.ReportSpam(
                 peer=userpm
@@ -64,7 +53,7 @@ async def _antipm_(client: Client, message: Message):
 @Client.on_message(filters.command("antipm") & filters.me)
 async def _antipm(_, message: Message):
     if len(message.command) == 1:
-        if antipmdb.get("core.antipm", "status", False):
+        if db.get("core.antipm", "status", False):
             await message.edit(
                 "Anti-PM Status: ON!\n"
                 f"Deactivated: <code>{prefix}antipm off</code>"
@@ -75,10 +64,10 @@ async def _antipm(_, message: Message):
                 f"Activated: <code>{prefix}antipm on</code>"
             )
     elif message.command[1] == "on":
-        antipmdb.set("core.antipm", "status", True)
+        db.set("core.antipm", "status", True)
         await message.edit("Anti-PM ON!")
     elif message.command[1] == "off":
-        antipmdb.set("core.antipm", "status", False)
+        db.set("core.antipm", "status", False)
         await message.edit("Anti-PM OFF!")
     else:
         await message.edit(
