@@ -8,8 +8,6 @@ from config import MONGODB_URL
 
 logger = logging.getLogger("db_client") 
 
-prefix = logging.get("core.main", "prefix", ".")
-
 antipmdb = logging.getLogger("db_client")
 
 async def go_antipm(user_id: int):
