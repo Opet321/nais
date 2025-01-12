@@ -8,29 +8,31 @@ from config import MONGODB_URL
 
 logger = logging.getLogger("db_client") 
 
-db = MongoCli(MONGODB_URL)
+mongo = MongoCli(MONGODB_URL)
+db = mongo.premium 
+ubotdb = db.ubot
 
 prefix = db.get("core.main", "prefix", ".")
 
 async def go_antipm(user_id: int):
-    user_data = await db.users.find_one({"user_id": user_id})
+    user_data = await ubotdb.users.find_one({"user_id": user_id})
     if user_data:
         await antipmdb.users.update_one(
             {"user_id": user_id},
             {"$set": {"antipm": True}},
         )
     else:
-        await db.users.insert_one(
+        await ubotdb.users.insert_one(
             {"user_id": user_id, "antipm": True}
         )
 
 
 async def no_antipmk(user_id: int):
-    await db.users.delete_one({"user_id": user_id, "antipm": True})
+    await ubotdb.users.delete_one({"user_id": user_id, "antipm": True})
 
 
 async def check_antipm(user_id: int):
-    user_data = await db.users.find_one({"user_id": user_id, "antipm": True})
+    user_data = await ubotdb.users.find_one({"user_id": user_id, "antipm": True})
     return user_data
 
 
