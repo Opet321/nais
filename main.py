@@ -29,7 +29,6 @@ app = Client(
     api_id=API_ID,
     api_hash=API_HASH,
     bot_token=BOT_TOKEN, 
-    string_session=STRING_SESSION,
     workers=32,
     workdir="./feedback/",
     plugins=dict(root="feedback.plugins"),
