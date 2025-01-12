@@ -3,9 +3,9 @@ import contextlib
 import logging
 
 import aiorun
-from pyrogram import Client
-from pyrogram.enums import ParseMode
-from pyrogram.errors import RPCError, TopicNotModified
+from pyrofork import Client
+from pyrofork.enums import ParseMode
+from pyrofork.errors import RPCError, TopicNotModified
 from pyrogram.types import BotCommand, BotCommandScopeChatAdministrators
 
 from config import API_HASH, API_ID, BOT_TOKEN, FORUM_CHAT_ID, STRING_SESSION
