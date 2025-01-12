@@ -10,10 +10,16 @@ from asyncio import sleep
 from feedback.base.db_client import antipmdb
 
 
-from utils.helpers.filters import(
-    pmstatus,
-    contacts,
-    supports
+pmstatus = filters.create(
+    lambda _, __, ___: db.get("core.antipm", "status", False)
+)
+
+contacts = filters.create(
+    lambda _, __, message: message.from_user.is_contact
+)
+
+supports = filters.create(
+    lambda _, __, message: message.chat.is_support
 )
 
 
