@@ -1,7 +1,7 @@
 import logging
 from typing import Any, Dict, Optional
 
-from motor.motor_asyncio import AsyncIOMotorClient as MongoCli
+from motor.motor_asyncio import AsyncIOMotorClient 
 from pyrogram import Client
 
 from config import MONGODB_URL
