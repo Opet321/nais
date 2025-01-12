@@ -7,11 +7,11 @@ from pyrogram.types import Message
 from pyrogram.raw.functions.messages import DeleteHistory 
 from pyrogram.raw import functions
 from asyncio import sleep
-from feedback.base.db_client import antipmdb
+from feedback.base.db_client import db
 
 
 pmstatus = filters.create(
-    lambda _, __, ___: antipmdb.get("core.antipm", "status", False)
+    lambda _, __, ___: db.get("core.antipm", "status", False)
 )
 
 contacts = filters.create(
