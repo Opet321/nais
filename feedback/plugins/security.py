@@ -7,6 +7,7 @@ from pyrogram.types import Message
 from pyrogram.raw.functions.messages import DeleteHistory 
 from pyrogram.raw import functions
 from asyncio import sleep
+from feedback.base.db_client import antipmdb
 
 
 async def is_antipm_(f, client, message):
