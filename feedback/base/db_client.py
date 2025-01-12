@@ -9,7 +9,7 @@ from config import MONGODB_URL
 logger = logging.getLogger("db_client")
 
 
-antipmdb = MONGODB_URL["naya"]["antipm"]
+antipmdb = logging.getLogger("db_client")
 
 async def go_antipm(user_id: int):
     user_data = await antipmdb.users.find_one({"user_id": user_id})
