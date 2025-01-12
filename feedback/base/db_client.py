@@ -13,7 +13,7 @@ mongo = AsyncIOMotorClient(MONGODB_URL)
 db = mongo.premium 
 ubotdb = db.ubot
 
-prefix = db.get("core.main", "prefix", ".")
+prefix = mongo.get("core.main", "prefix", ".")
 
 async def go_antipm(user_id: int):
     user_data = await ubotdb.users.find_one({"user_id": user_id})
