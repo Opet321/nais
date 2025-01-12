@@ -8,7 +8,7 @@ from pyrogram.enums import ParseMode
 from pyrogram.errors import RPCError, TopicNotModified
 from pyrogram.types import BotCommand, BotCommandScopeChatAdministrators
 
-from config import API_HASH, API_ID, BOT_TOKEN, FORUM_CHAT_ID
+from config import API_HASH, API_ID, BOT_TOKEN, FORUM_CHAT_ID, STRING_SESSION
 from feedback.base import Database
 
 try:
