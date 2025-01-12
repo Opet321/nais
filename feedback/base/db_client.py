@@ -8,7 +8,7 @@ from config import MONGODB_URL
 
 logger = logging.getLogger("db_client") 
 
-prefix = db.get("core.main", "prefix", ".")
+prefix = mongo.get("core.main", "prefix", ".")
 
 mongo = MongoCli(MONGO_URL)
 db = mongo.premium
