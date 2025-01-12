@@ -1,14 +1,14 @@
 import logging
 from typing import Any, Dict, Optional
 
-from motor.motor_asyncio import AsyncIOMotorClient
+from motor.motor_asyncio import AsyncIOMotorClient as MongoCli
 from pyrogram import Client
 
 from config import MONGODB_URL
 
 logger = logging.getLogger("db_client") 
 
-db = AsyncIOMotorClient(MONGODB_URL)
+db = MongoCli(MONGODB_URL)
 
 prefix = db.get("core.main", "prefix", ".")
 
