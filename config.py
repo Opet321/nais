@@ -28,6 +28,6 @@ def get_env_var(
 API_ID = int(get_env_var("API_ID"))
 API_HASH = get_env_var("API_HASH")
 BOT_TOKEN = get_env_var("BOT_TOKEN") 
-STRING_SESSION = get_env_var("SESSION_STRING")
+STRING_SESSION = get_env_var("STRING_SESSION")
 FORUM_CHAT_ID = int(get_env_var("FORUM_CHAT_ID"))
 MONGODB_URL = get_env_var("MONGODB_URL")
