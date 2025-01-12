@@ -10,54 +10,73 @@ from asyncio import sleep
 from feedback.base.db_client import antipmdb
 
 
-async def is_antipm_(f, client, message):
-    user_id = client.me.id
-    antipm_c = await check_antipm(user_id)
-    if antipm_c:
-        return bool(True)
-    else:
-        return bool(False)
-
-is_antipm = filters.create(func=is_antipm_, name="is_antipm_")
-
-@Client.on_message(filters.command(["autopurge"]) & filters.me)
-async def set_antipm(client, message):
-    try:
-        if len(message.command) < 2:
-            await message.reply("Please specify 'on' or 'off'.", quote=True)
-            return
-        
-        if message.command[1] == "on":
-            user_id = client.me.id
-            await go_antipm(user_id)
-            await message.reply("<b>Anti-PM activated!!</b>", quote=True)
-        elif message.command[1] == "off":
-            user_id = client.me.id
-            await no_antipmk(user_id)
-            await message.reply("<b>Anti-PM deactivated!!</b>", quote=True)
-        else:
-            kontols = await check_antipm(client.me.id)
-            kurukuru = kontols.get("antipm", "False")
-            await message.reply(f"<b>Anti-PM status:</b> <code>{kurukuru}</code>\n<b>To Activate use</b> <code>antipm on/off</code>", quote=True)
-    except Exception as e:
-        print(f"Error in set_antipm: {e}")
-        kontols = await check_antipm(client.me.id)
-        kurukuru = kontols.get("antipm", "False")
-        await message.reply(f"<b>Anti-PM status:</b> <code>{kurukuru}</code>\n<b>To Activate use</b> <code>antipm on/off</code>", quote=True)
+from utils.helpers.filters import(
+    pmstatus,
+    contacts,
+    supports
+)
 
 
 @Client.on_message(
-    ~filters.me
+    filters.private
+    & ~filters.me
     & ~filters.bot
-    & filters.private
-    & is_antipm
+    & ~contacts
+    & ~supports
+    & pmstatus
 )
-async def antipm_er(client, message):
-    anuku = await client.resolve_peer(message.chat.id)
-    if message.from_user.is_contact is True:
-        return
-    if message.from_user.is_support is True:
-        return
-    if message.from_user.id == OWNER:
-        return 
-    await client.invoke(DeleteHistory(peer=anuku, max_id=0, revoke=True))
+async def _antipm_(client: Client, message: Message):
+    userpm = await client.resolve_peer(message.chat.id)
+    if antipmdb.get("core.antipm", "pmreport", False):
+        await client.invoke(
+            functions.messages.ReportSpam(
+                peer=userpm
+            )
+        )
+    if antipmdb.get("core.antipm", "pmblock", False):
+        await client.invoke(
+            functions.contacts.Block(
+                id=userpm
+            )
+        )
+    msg = await client.send_message(
+        message.chat.id,
+        "Sorry... No-PMs!"
+    )
+    for countdown in ["3", "2", "1"]:
+        await sleep(1)
+        await msg.edit(countdown)
+    await client.invoke(
+        functions.messages.DeleteHistory(
+            peer=userpm,
+            max_id=0,
+            revoke=True
+        )
+    )
+
+
+@Client.on_message(filters.command("antipm", prefix) & filters.me)
+async def _antipm(_, message: Message):
+    if len(message.command) == 1:
+        if antipmdb.get("core.antipm", "status", False):
+            await message.edit(
+                "Anti-PM Status: ON!\n"
+                f"Deactivated: <code>{prefix}antipm off</code>"
+            )
+        else:
+            await message.edit(
+                "Anti-PM Status: OFF!\n"
+                f"Activated: <code>{prefix}antipm on</code>"
+            )
+    elif message.command[1] == "on":
+        antipmdb.set("core.antipm", "status", True)
+        await message.edit("Anti-PM ON!")
+    elif message.command[1] == "off":
+        antipmdb.set("core.antipm", "status", False)
+        await message.edit("Anti-PM OFF!")
+    else:
+        await message.edit(
+            "Usage: "
+            f"<code>{prefix}antipm </code>"
+            "[on|off]"
+        )
