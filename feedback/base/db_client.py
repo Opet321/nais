@@ -8,7 +8,7 @@ from config import MONGODB_URL
 
 logger = logging.getLogger("db_client") 
 
-mongo = MongoCli(MONGODB_URL)
+mongo = AsyncIOMotorClient(MONGODB_URL)
 db = mongo.premium 
 ubotdb = db.ubot
 
