@@ -7,7 +7,7 @@ from pyrogram.types import Message
 from pyrogram.raw.functions.messages import DeleteHistory 
 from pyrogram.raw import functions
 from asyncio import sleep
-from feedback.base.db_client import db, prefix
+from feedback.base.db_client import db
 
 
 pmstatus = filters.create(
@@ -61,7 +61,7 @@ async def _antipm_(client: Client, message: Message):
     )
 
 
-@Client.on_message(filters.command("antipm", prefix) & filters.me)
+@Client.on_message(filters.command("antipm") & filters.me)
 async def _antipm(_, message: Message):
     if len(message.command) == 1:
         if antipmdb.get("core.antipm", "status", False):
