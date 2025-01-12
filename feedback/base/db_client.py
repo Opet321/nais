@@ -1,6 +1,7 @@
 import logging
 from typing import Any, Dict, Optional
 
+import motor.motor_asyncio
 from motor.motor_asyncio import AsyncIOMotorClient 
 from pyrogram import Client
 
