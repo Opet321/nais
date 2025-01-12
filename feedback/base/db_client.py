@@ -6,8 +6,9 @@ from pyrogram import Client
 
 from config import MONGODB_URL
 
-logger = logging.getLogger("db_client")
+logger = logging.getLogger("db_client") 
 
+prefix = logging.get("core.main", "prefix", ".")
 
 antipmdb = logging.getLogger("db_client")
 
