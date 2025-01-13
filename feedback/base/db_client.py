@@ -156,68 +156,68 @@ class Database:
         )
 
 
-#     async def add_blocked_user(self, user_id: int) -> None:
-#         """
-#         Adds a user ID to the blocked_user_ids list.
-#
-#         Args:
-#             user_id (int): ID of the user to be blocked.
-#
-#         Returns:
-#             None
-#         """
-#         await self.db.update_one(
-#             {"_id": "blocked_user_ids"},
-#             {"$addToSet": {"user_ids": user_id}},
-#             upsert=True,
-#         )
-#
-#     async def remove_blocked_user(self, user_id: int) -> None:
-#         """
-#         Removes a user ID from the blocked_user_ids list.
-#
-#         Args:
-#             user_id (int): ID of the user to be removed from the block list.
-#
-#         Returns:
-#             None
-#         """
-#         await self.db.update_one(
-#             {"_id": "blocked_user_ids"}, {"$pull": {"user_ids": user_id}}
-#         )
-#
-#     async def get_blocked_users(self) -> Optional[List[int]]:
-#         """
-#         Retrieves the list of all blocked user IDs.
-#
-#         Returns:
-#             Optional[List[int]]: List of blocked user IDs if found, otherwise None.
-#         """
-#         doc = await self.db.find_one({"_id": "blocked_user_ids"})
-#         if doc:
-#             return doc.get("user_ids", [])
-#         return []
-#
-#     async def get_all_user_ids_with_message_data(self) -> List[int]:
-#         """
-#         Retrieves a list of all unique user IDs that have message data.
-#
-#         Returns:
-#             List[int]: List of user IDs with message data.
-#         """
-#         user_docs = await self.db.find({"message_data_ids": {"$exists": True}}).to_list(
-#             length=None
-#         )
-#         return [doc["user_id"] for doc in user_docs]
-#
-#     async def delete_user_message_data(self, user_id: int) -> None:
-#         """
-#         Deletes a specific user's document from the message data collection.
-#
-#         Args:
-#             user_id (int): The ID of the user whose message data should be deleted.
-#
-#         Returns:
-#             None
-#         """
-#         await self.db.delete_one({"user_id": user_id})
+     async def add_blocked_user(self, user_id: int) -> None:
+         """
+         Adds a user ID to the blocked_user_ids list.
+
+         Args:
+             user_id (int): ID of the user to be blocked.
+
+         Returns:
+             None
+         """
+         await self.db.update_one(
+             {"_id": "blocked_user_ids"},
+             {"$addToSet": {"user_ids": user_id}},
+             upsert=True,
+         )
+
+     async def remove_blocked_user(self, user_id: int) -> None:
+         """
+         Removes a user ID from the blocked_user_ids list.
+
+         Args:
+             user_id (int): ID of the user to be removed from the block list.
+
+         Returns:
+             None
+         """
+         await self.db.update_one(
+             {"_id": "blocked_user_ids"}, {"$pull": {"user_ids": user_id}}
+         )
+
+     async def get_blocked_users(self) -> Optional[List[int]]:
+         """
+         Retrieves the list of all blocked user IDs.
+
+         Returns:
+             Optional[List[int]]: List of blocked user IDs if found, otherwise None.
+         """
+         doc = await self.db.find_one({"_id": "blocked_user_ids"})
+         if doc:
+             return doc.get("user_ids", [])
+         return []
+
+     async def get_all_user_ids_with_message_data(self) -> List[int]:
+         """
+         Retrieves a list of all unique user IDs that have message data.
+
+         Returns:
+             List[int]: List of user IDs with message data.
+         """
+         user_docs = await self.db.find({"message_data_ids": {"$exists": True}}).to_list(
+             length=None
+         )
+         return [doc["user_id"] for doc in user_docs]
+
+     async def delete_user_message_data(self, user_id: int) -> None:
+         """
+         Deletes a specific user's document from the message data collection.
+
+         Args:
+             user_id (int): The ID of the user whose message data should be deleted.
+
+         Returns:
+             None
+         """
+         await self.db.delete_one({"user_id": user_id})
