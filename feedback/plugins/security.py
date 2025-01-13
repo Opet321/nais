@@ -9,7 +9,8 @@ from pyrogram.raw.functions.messages import DeleteHistory
 from pyrogram.raw import functions 
 from typing import Tuple
 from pyrogram.types import InlineQueryResultArticle, InlineKeyboardButton, InlineKeyboardMarkup, InputTextMessageContent, InlineQuery, Message
-from asyncio import sleep
+from asyncio import sleep 
+from config import MONGODB_URL
 import motor.motor_asyncio 
 from motor.motor_asyncio import AsyncIOMotorClient 
 
