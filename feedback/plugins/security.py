@@ -10,7 +10,7 @@ from pyrogram.raw import functions
 from typing import Tuple
 from pyrogram.types import InlineQueryResultArticle, InlineKeyboardButton, InlineKeyboardMarkup, InputTextMessageContent, InlineQuery, Message
 from asyncio import sleep 
-from config import MONGODB_URL
+from config import MONGODB_URL, CMD_HNDLR
 import motor.motor_asyncio 
 from motor.motor_asyncio import AsyncIOMotorClient 
 
@@ -39,7 +39,6 @@ async def check_antipm(user_id: int):
     user_data = await antipmdb.users.find_one({"user_id": user_id, "antipm": True})
     return user_data
 
-CMD_HNDLR = getenv("CMD_HNDLR", ".")
 cmd = CMD_HNDLR
 
 async def run_cmd(cmd: str) -> Tuple[str, str, int, int]:
