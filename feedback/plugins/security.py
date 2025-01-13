@@ -50,7 +50,7 @@ async def _antipm_(client: Client, message: Message):
     )
 
 
-@Client.on_message(filters.command("antipm") & filters.me)
+@Client.on_message(filters.command(["antipm"])
 async def _antipm(_, message: Message):
     if len(message.command) == 1:
         if db.get("core.antipm", "status", False):
