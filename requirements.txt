@@ -2,7 +2,6 @@ aiohttp
 aiorun
 meval
 motor
-pyrotgfork 
-pyrofrok
+hydrogram
 tgcrypto-pyrofork
 uvloop
