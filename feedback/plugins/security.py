@@ -2,7 +2,8 @@
 
 from asyncio import sleep
 
-from pyrogram import Client, filters
+from pyrogram import Client, filters 
+from os import getenv
 from pyrogram.types import Message
 from pyrogram.raw.functions.messages import DeleteHistory 
 from pyrogram.raw import functions 
@@ -11,8 +12,8 @@ from pyrogram.types import InlineQueryResultArticle, InlineKeyboardButton, Inlin
 from asyncio import sleep
 from feedback.base.db_client import db, pmstatus, contacts, supports
 
-
-cmd = "."
+CMD_HNDLR = getenv("CMD_HNDLR", ".")
+cmd = CMD_HNDLR
 
 async def run_cmd(cmd: str) -> Tuple[str, str, int, int]:
     """Run Commands"""
