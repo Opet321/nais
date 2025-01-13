@@ -11,42 +11,8 @@ from config import MONGODB_URL
 logger = logging.getLogger("db_client") 
 
 mongo = AsyncIOMotorClient(MONGODB_URL)
-db = mongo.premium 
-ubotdb = db.ubot
-
-pmstatus = filters.create(
-    lambda _, __, ___: db.get("core.antipm", "status", False)
-)
-
-contacts = filters.create(
-    lambda _, __, message: message.from_user.is_contact
-)
-
-supports = filters.create(
-    lambda _, __, message: message.chat.is_support
-)
 
 
-async def go_antipm(user_id: int):
-    user_data = await ubotdb.users.find_one({"user_id": user_id})
-    if user_data:
-        await antipmdb.users.update_one(
-            {"user_id": user_id},
-            {"$set": {"antipm": True}},
-        )
-    else:
-        await ubotdb.users.insert_one(
-            {"user_id": user_id, "antipm": True}
-        )
-
-
-async def no_antipmk(user_id: int):
-    await ubotdb.users.delete_one({"user_id": user_id, "antipm": True})
-
-
-async def check_antipm(user_id: int):
-    user_data = await ubotdb.users.find_one({"user_id": user_id, "antipm": True})
-    return user_data
 
 
 class Database:
