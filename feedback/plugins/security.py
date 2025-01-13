@@ -6,6 +6,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 from pyrogram.raw.functions.messages import DeleteHistory 
 from pyrogram.raw import functions 
+from typing import Tuple
 from pyrogram.types import InlineQueryResultArticle, InlineKeyboardButton, InlineKeyboardMarkup, InputTextMessageContent, InlineQuery, Message
 from asyncio import sleep
 from feedback.base.db_client import db, pmstatus, contacts, supports
