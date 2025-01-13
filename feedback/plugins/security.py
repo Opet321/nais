@@ -14,7 +14,7 @@ from config import MONGODB_URL
 import motor.motor_asyncio 
 from motor.motor_asyncio import AsyncIOMotorClient 
 
-mongo = AsyncIOMotorClient(MONGO_URL)
+mongo = AsyncIOMotorClient(MONGODB_URL)
 antipmdb = mongo.pmpermit
 
 
