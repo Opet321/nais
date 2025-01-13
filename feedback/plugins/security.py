@@ -66,7 +66,7 @@ async def is_antipm_(f, client, message):
 
 is_antipm = filters.create(func=is_antipm_, name="is_antipm_")
 
-@Client.on_message(filters.command(["autopurge"], cmd) & filters.me)
+@app.on_message(filters.command(["autopurge"], cmd) & filters.me)
 async def set_antipm(client, message):
     try:
         if len(message.command) < 2:
