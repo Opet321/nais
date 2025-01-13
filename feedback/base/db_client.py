@@ -156,7 +156,7 @@ class Database:
         )
 
 
-     async def add_blocked_user(self, user_id: int) -> None:
+    async def add_blocked_user(self, user_id: int) -> None:
          """
          Adds a user ID to the blocked_user_ids list.
 
@@ -172,7 +172,7 @@ class Database:
              upsert=True,
          )
 
-     async def remove_blocked_user(self, user_id: int) -> None:
+    async def remove_blocked_user(self, user_id: int) -> None:
          """
          Removes a user ID from the blocked_user_ids list.
 
@@ -186,7 +186,7 @@ class Database:
              {"_id": "blocked_user_ids"}, {"$pull": {"user_ids": user_id}}
          )
 
-     async def get_blocked_users(self) -> Optional[List[int]]:
+    async def get_blocked_users(self) -> Optional[List[int]]:
          """
          Retrieves the list of all blocked user IDs.
 
@@ -198,7 +198,7 @@ class Database:
              return doc.get("user_ids", [])
          return []
 
-     async def get_all_user_ids_with_message_data(self) -> List[int]:
+    async def get_all_user_ids_with_message_data(self) -> List[int]:
          """
          Retrieves a list of all unique user IDs that have message data.
 
@@ -210,7 +210,7 @@ class Database:
          )
          return [doc["user_id"] for doc in user_docs]
 
-     async def delete_user_message_data(self, user_id: int) -> None:
+    async def delete_user_message_data(self, user_id: int) -> None:
          """
          Deletes a specific user's document from the message data collection.
 
