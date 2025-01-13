@@ -10,7 +10,33 @@ from pyrogram.raw import functions
 from typing import Tuple
 from pyrogram.types import InlineQueryResultArticle, InlineKeyboardButton, InlineKeyboardMarkup, InputTextMessageContent, InlineQuery, Message
 from asyncio import sleep
-from feedback.base.db_client import db, pmstatus, contacts, supports
+import motor.motor_asyncio 
+from motor.motor_asyncio import AsyncIOMotorClient 
+
+mongo = AsyncIOMotorClient(MONGO_URL)
+antipmdb = mongo.pmpermit
+
+
+async def go_antipm(user_id: int):
+    user_data = await antipmdb.users.find_one({"user_id": user_id})
+    if user_data:
+        await antipmdb.users.update_one(
+            {"user_id": user_id},
+            {"$set": {"antipm": True}},
+        )
+    else:
+        await antipmdb.users.insert_one(
+            {"user_id": user_id, "antipm": True}
+        )
+
+
+async def no_antipmk(user_id: int):
+    await antipmdb.users.delete_one({"user_id": user_id, "antipm": True})
+
+
+async def check_antipm(user_id: int):
+    user_data = await antipmdb.users.find_one({"user_id": user_id, "antipm": True})
+    return user_data
 
 CMD_HNDLR = getenv("CMD_HNDLR", ".")
 cmd = CMD_HNDLR
